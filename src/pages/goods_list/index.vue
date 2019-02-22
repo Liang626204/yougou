@@ -36,7 +36,7 @@ export default {
   data() {
     return { 
       search_data:{
-        query: '小米',
+        query: '',
         pagenum: 1,
         pagesize:20
       },
@@ -45,13 +45,21 @@ export default {
     };
   },
   onLoad(querys) {
+    this.totel_list = []
     console.log("小程序生命周期函数onLoad", querys);
-    //this.search_data.query = querys.keys
-    console.log(this.search_data);
+    this.search_data.query = querys.keys
+    console.log(this.search_data.query);
+    // this.getdata()
+    this.all = false
+  },
+  onShow(){
+    this.totel_list = []
     this.getdata()
+    this.all = false
   },
    // 下拉刷新事件
   onPullDownRefresh(){
+    this.totel_list = []
     this.pagenum=1,
     this.getdata()
       /* 添加加载动画 */
@@ -64,7 +72,11 @@ export default {
         /* 隐藏加载动画 */
          wx.hideLoading()
         this.totel_list = [...this.totel_list,...res.data.message.goods]
-        console.log(this.totel_list);
+        console.log('-------------------------');
+        console.log(this.search_data);
+        console.log('-------------------------');
+        /* 关闭下拉加载动画 */
+        wx.stopPullDownRefresh()
         if(res.data.message.goods.length<this.search_data.pagesize){
           this.all = true
         }
