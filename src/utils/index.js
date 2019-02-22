@@ -17,8 +17,20 @@ export function formatTime (date) {
 
   return `${t1} ${t2}`
 }
-
+export function request(url, method, data) {
+  return new Promise((resolve, rejects) => {
+    wx.request({
+      url,
+      method,
+      data,
+      success: res => {
+        resolve(res);
+      }
+    })
+  })
+}
 export default {
   formatNumber,
-  formatTime
+  formatTime,
+  request
 }

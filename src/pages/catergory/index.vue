@@ -16,7 +16,11 @@
           <div class="totle_list" v-for="(list, index) in list_info" :key="index">
             <view class="list_title">{{list.cat_name}}</view>
             <view class="info">
-              <div class="list_info" v-for="(list_item, indexs) in list.children" :key="indexs">
+              <div class="list_info" 
+              v-for="(list_item, indexs) in list.children" 
+              :key="indexs"
+              @tap="search_list(list_item.cat_name)"
+              >
                 <img
                   :src="list_item.cat_icon"
                   alt
@@ -70,6 +74,12 @@ export default {
         this.list_info = this.totle_data[index].children;
       }, 0);
       
+    },
+    search_list(key){
+      console.log(key); 
+       wx.navigateTo({
+      url: '/pages/goods_list/main'+'?key='+key
+      }) 
     }
   },
   mounted() {

@@ -1,6 +1,6 @@
 <template>
     <div class="search">
-      <div class="search_input" space="ensp">
+      <div class="search_input" space="ensp" @tap = 'toGoods_list'>
         <icon type="search" size="32rpx"/> 搜索
       </div>
     </div>
@@ -8,7 +8,14 @@
 
 <script>
 export default {
-  props: ['text']
+  methods: {
+    toGoods_list(){
+      console.log(123)
+      wx.navigateTo({
+      url: '/pages/goods_list/main'
+      })
+    }
+  }
 }
 </script>
 

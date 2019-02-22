@@ -54,11 +54,7 @@ import search from "@/components/search";
 export default {
   data() {
     return {
-      imgUrls:[
-        'http://img1.imgtn.bdimg.com/it/u=2889071067,3097213070&fm=26&gp=0.jpg',
-        'http://img5.imgtn.bdimg.com/it/u=1320682145,1663705614&fm=26&gp=0.jpg',
-        'http://img4.imgtn.bdimg.com/it/u=3814355802,2225098832&fm=26&gp=0.jpg'
-      ],
+      imgUrls:[],
       catitems:[],
       floors:[]
     };
