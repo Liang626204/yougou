@@ -21,24 +21,24 @@
     </div>
     <!-- 商品分类 -->
     <div class="floordata">
-      <div class="floordatalist" v-for="(item, index) in catitems " :key="index">
-        <img src="http://img1.imgtn.bdimg.com/it/u=2889071067,3097213070&fm=26&gp=0.jpg" alt="" class="floordatalisttitle">
+      <div class="floordatalist" v-for="(item, index) in floors " :key="index">
+        <img :src="item.floor_title.image_src" alt="" class="floordatalisttitle">
         <div class="floordatainfo">
           <div class="infoleft">
-            <img src="http://img1.imgtn.bdimg.com/it/u=2889071067,3097213070&fm=26&gp=0.jpg" alt="" class="floordatalisttitle">
+            <img :src="item.product_list[0].image_src" alt="" class="floordatalisttitle">
           </div>
           <div class="inforight">
             <div class="inforightlist">
-              <img src="http://img1.imgtn.bdimg.com/it/u=2889071067,3097213070&fm=26&gp=0.jpg" alt="" class="floordatalisttitle">
+              <img :src="item.product_list[1].image_src" alt="" class="floordatalisttitle">
             </div>
             <div class="inforightlist">
-              <img src="http://img1.imgtn.bdimg.com/it/u=2889071067,3097213070&fm=26&gp=0.jpg" alt="" class="floordatalisttitle">
+              <img :src="item.product_list[2].image_src" alt="" class="floordatalisttitle">
             </div>
             <div class="inforightlist">
-              <img src="http://img1.imgtn.bdimg.com/it/u=2889071067,3097213070&fm=26&gp=0.jpg" alt="" class="floordatalisttitle">
+              <img :src="item.product_list[3].image_src" alt="" class="floordatalisttitle">
             </div>
             <div class="inforightlist">
-              <img src="http://img1.imgtn.bdimg.com/it/u=2889071067,3097213070&fm=26&gp=0.jpg" alt="" class="floordatalisttitle">
+              <img :src="item.product_list[4].image_src" alt="" class="floordatalisttitle">
             </div>
             
           </div>
@@ -59,7 +59,8 @@ export default {
         'http://img5.imgtn.bdimg.com/it/u=1320682145,1663705614&fm=26&gp=0.jpg',
         'http://img4.imgtn.bdimg.com/it/u=3814355802,2225098832&fm=26&gp=0.jpg'
       ],
-      catitems:[]
+      catitems:[],
+      floors:[]
     };
   },
 
@@ -100,6 +101,15 @@ export default {
       success:(res)=>{
         console.log(res)
         this.catitems = res.data.message
+      }
+    })
+    wx.request({
+      url:'https://www.zhengzhicheng.cn/api/public/v1/home/floordata',
+      success:(res)=>{
+        console.log('------')
+        console.log(res)
+        console.log('------')
+        this.floors = res.data.message
       }
     })
   }
@@ -145,9 +155,15 @@ export default {
 .inforight{
   flex: 4;
   display: flex;
+  flex-wrap: wrap;
   .inforightlist{
-    flex: 1;
-    flex-wrap: wrap;
+    width: 50%;
+    height: 50%;
+    img{
+      width: 96%;
+      height: 96%;
+      border-radius: 20rpx;
+    }
   }
 }
 </style>
