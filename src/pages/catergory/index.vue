@@ -56,7 +56,7 @@ export default {
   created() {
     let logs;
     if (mpvuePlatform === "my") {
-      logs = mpvue.getStorageSync({ key: "logs" }).data || [];
+      logs = mpvue.getStorageSync({ keys: "logs" }).data || [];
     } else {
       logs = mpvue.getStorageSync("logs") || [];
     }
@@ -75,10 +75,10 @@ export default {
       }, 0);
       
     },
-    search_list(key){
-      console.log(key); 
+    search_list(keys){
+      console.log(keys); 
        wx.navigateTo({
-      url: '/pages/goods_list/main'+'?key='+key
+      url: '/pages/goods_list/main'+'?keys='+keys
       }) 
     }
   },

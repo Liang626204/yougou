@@ -2,7 +2,7 @@
   <view>
     <div class="search">
       <div class="search_input" space="ensp" @tap="toGoods_list">
-        <icon type="search" size="32rpx"></icon>{{search_data.keys}}
+        <icon type="search" size="32rpx"></icon>{{search_data.query}}
       </div>
     </div>
     <view class="totle">
@@ -25,6 +25,7 @@
         </div>
       </view>
     </view>
+    <view v-show="all">这是我的底线………………</view>
   </view>
 </template>
 
@@ -33,29 +34,53 @@ import { request } from "@/utils/index";
 export default {
 
   data() {
-    return {
-      
+    return { 
       search_data:{
         query: '小米',
         pagenum: 1,
         pagesize:20
       },
-      totel_list:[]
+      totel_list:[],
+      all:false
     };
   },
-  onLoad(query) {
-    console.log("小程序生命周期函数onLoad", query);
-    console.log(this.key);
+  onLoad(querys) {
+    console.log("小程序生命周期函数onLoad", querys);
+    //this.search_data.query = querys.keys
+    console.log(this.search_data);
     this.getdata()
+  },
+   // 下拉刷新事件
+  onPullDownRefresh(){
+    this.pagenum=1,
+    this.getdata()
+      /* 添加加载动画 */
   },
   methods: {
     getdata(){
       request("https://www.zhengzhicheng.cn/api/public/v1/goods/search", 'GET', this.search_data)
       .then(res=>{
         console.log(res)
-        this.totel_list = res.data.message.goods
+        /* 隐藏加载动画 */
+         wx.hideLoading()
+        this.totel_list = [...this.totel_list,...res.data.message.goods]
+        console.log(this.totel_list);
+        if(res.data.message.goods.length<this.search_data.pagesize){
+          this.all = true
+        }
       })
     }
+  },
+  /* 触底加载更多 */
+  onReachBottom(){
+      console.log("触底")
+      this.search_data.pagenum++
+      this.getdata()
+      /* 添加加载动画 */
+      wx.showLoading({
+        title: '加载更多',
+      })
+
   },
   created() {}
 };
